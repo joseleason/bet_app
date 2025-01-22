@@ -40,7 +40,7 @@ def recommended_bet_size(prob: float, american_ml: float, fraction_kelly: float,
     kf = kelly_fraction(prob, b)  # raw Kelly fraction
     raw_bet = fraction_kelly * kf * morning_bank
     cap = max_bet_fraction * morning_bank
-    return min(raw_bet, cap)
+    return min(raw_bet, cap), kf
 
 
 def main():
@@ -62,7 +62,7 @@ def main():
         # Probability for away is just 1 - model_prob_home
         p_away = 1.0 - model_prob_home
 
-        home_bet = recommended_bet_size(
+        home_bet, home_kf = recommended_bet_size(
             prob=model_prob_home,
             american_ml=home_ml,
             fraction_kelly=fraction_k,
@@ -70,7 +70,7 @@ def main():
             max_bet_fraction=max_bet_frac
         )
 
-        away_bet = recommended_bet_size(
+        away_bet, away_kf = recommended_bet_size(
             prob=p_away,
             american_ml=away_ml,
             fraction_kelly=fraction_k,
@@ -81,6 +81,10 @@ def main():
         st.subheader("Results")
         st.write(f"**Recommended Home Bet**:  \${home_bet:,.2f}")
         st.write(f"**Recommended Away Bet**:  \${away_bet:,.2f}")
+
+        st.subheader("Additional information")
+        st.write(f"**Raw Kelly Home Bet**:  {home_kf:,.2f}")
+        st.write(f"**Raw Kelly Away Bet**:  {away_kf:,.2f}")
 
         # If both Kelly fractions are positive, user might only want one side.
         # Typically you pick the side that has the higher EV, but we leave that decision to the user.
