@@ -51,11 +51,11 @@ def main():
     # User inputs
     ml = st.number_input("Moneyline", value=-110.0, step=5.0, format="%.2f")
     fraction_k = st.number_input("Fraction of Kelly Criterion (e.g. 0.5 for half Kelly)",
-                                 value=0.10, min_value=0.0, step=0.10, format="%.2f")
+                                 value=0.125, min_value=0.0, step=0.10, format="%.3f")
     model_prob = st.number_input("Probability of Win",
-                                      value=0.50, min_value=0.0, max_value=1.0, step=0.01, format="%.2f")
+                                      value=0.50, min_value=0.0, max_value=1.0, step=0.01, format="%.3f")
     morning_bank = st.number_input("Morning Bank", value=2000.0, step=100.0, format="%.2f")
-    max_bet_frac = st.number_input("Max Bet Fraction (of bank)", value=0.05, min_value=0.0, step=0.05, format="%.2f")
+    max_bet_frac = st.number_input("Max Bet Fraction (of bank)", value=0.02, min_value=0.0, step=0.01, format="%.2f")
 
     if st.button("Calculate Bet Sizes"):
 
